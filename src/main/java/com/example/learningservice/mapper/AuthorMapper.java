@@ -10,4 +10,6 @@ public interface AuthorMapper {
     AuthorMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(AuthorMapper.class);
     
     Author authorEntityToAuthor(AuthorEntity authorEntity);
+    
+    AuthorEntity authorToAuthorEntity(Author author);
 }

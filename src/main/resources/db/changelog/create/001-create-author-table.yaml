@@ -34,6 +34,9 @@ databaseChangeLog:
                       unique: true
                       uniqueConstraintName: author_email_unique
                 - column:
+                    name: age
+                    type: INT
+                - column:
                     name: created_at
                     type: TIMESTAMP
                     defaultValueComputed: CURRENT_TIMESTAMP

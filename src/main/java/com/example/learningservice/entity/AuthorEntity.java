@@ -3,15 +3,11 @@ package com.example.learningservice.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "author")
-public class AuthorEntity {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AuthorEntity extends BaseEntity {
     
     @Column(nullable = false, length = 50)
     private String firstName;
@@ -19,25 +15,13 @@ public class AuthorEntity {
     @Column(length = 50)
     private String lastName;
     
-    
     @Column(unique = true, length = 100)
     private String email;
     
     private Integer age;
     
-    @Column(updatable = false, nullable = false)
-    private LocalDateTime createdAt;
-    
-    @Column(insertable = false)
-    private LocalDateTime updatedAt;
-    
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToMany(mappedBy = "authorEntities")
+    private List<CourseEntity> courseEntities;
     
     public String getFirstName() {
         return firstName;
@@ -71,23 +55,11 @@ public class AuthorEntity {
         this.age = age;
     }
     
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public List<CourseEntity> getCourseEntities() {
+        return courseEntities;
     }
     
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCourseEntities(List<CourseEntity> courseEntities) {
+        this.courseEntities = courseEntities;
     }
-    
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-    
-    // Getters and Setters
-    // toString
-    // equals and hashCode
 }

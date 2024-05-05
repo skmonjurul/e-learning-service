@@ -6,6 +6,8 @@ import com.example.learningservice.entity.AuthorEntity;
 import com.example.learningservice.exception.ResourceNotFoundException;
 import com.example.learningservice.mapper.AuthorMapper;
 import com.example.learningservice.repository.AuthorRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +30,22 @@ public class AuthorService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Author with id %s not found", id))));
     }
     
-    public List<Author> getAllAuthors() {
+    public List<Author> getAllAuthors(Integer pageNumber, Integer pageSize) {
+        pageNumber = pageNumber != null ? pageNumber : 0;
+        if (pageSize == null || pageSize < 0) {
+            return getAllAuthors();
+        }
+        return pageSize == 0 ? List.of() : getAllAuthors(PageRequest.of(pageNumber, pageSize));
+    }
+    
+    private List<Author> getAllAuthors() {
         return authorRepository.findAll().stream()
+                .map(AuthorMapper.INSTANCE::authorEntityToAuthor)
+                .toList();
+    }
+    
+    private List<Author> getAllAuthors(Pageable pageable) {
+        return authorRepository.findAll(pageable).stream()
                 .map(AuthorMapper.INSTANCE::authorEntityToAuthor)
                 .toList();
     }

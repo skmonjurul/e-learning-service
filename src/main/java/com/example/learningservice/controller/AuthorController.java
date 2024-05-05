@@ -32,8 +32,9 @@ public class AuthorController {
     }
     
     @GetMapping
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(authorService.getAllAuthors());
+    public ResponseEntity<List<Author>> getAllAuthors(@RequestParam(name = "pageNumber", required = false) Integer pageNumber,
+                                                      @RequestParam(name = "pageSize", required = false) Integer pageSize) {
+        return ResponseEntity.ok(authorService.getAllAuthors(pageNumber, pageSize));
     }
     
     @PatchMapping("/{id}")
